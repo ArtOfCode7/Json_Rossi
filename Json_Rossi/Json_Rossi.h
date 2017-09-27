@@ -39,6 +39,7 @@ namespace Json_Rossi
 
 		~Json();
 
+
 		Type type() const;
 
 		bool isNull() const
