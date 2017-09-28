@@ -4,14 +4,14 @@
 #include <vector>
 #include <map>
 #include <memory>
-//#include <initializer_list>
+#include <initializer_list>
 
 namespace Json_Rossi
 {
 
 	class JsonValue;
 
-	class Json
+	class Json final
 	{
 		enum Type
 		{
@@ -40,6 +40,8 @@ namespace Json_Rossi
 		~Json();
 
 
+		Json(void*) = delete;
+
 		Type type() const;
 
 		bool isNull() const
@@ -62,6 +64,15 @@ namespace Json_Rossi
 		{
 			return type() == ETYPE_OBJ;
 		}
+
+		
+
+		bool operator== (const Json &rhs) const;
+		bool operator<  (const Json &rhs) const;
+		bool operator!= (const Json &rhs) const { return !(*this == rhs); }
+		bool operator<= (const Json &rhs) const { return !(rhs < *this); }
+		bool operator>  (const Json &rhs) const { return  (rhs < *this); }
+		bool operator>= (const Json &rhs) const { return !(*this < rhs); }
 
 	private:
 		std::shared_ptr<JsonValue> m_ptr;
